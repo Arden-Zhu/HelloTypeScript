@@ -91,9 +91,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.html" />
+    <Content Include="index2.html" />
     <Content Include="readme.txt" />
-    <Content Include="SpecRunner.html" />
+    <Content Include="index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +102,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="SimpleJasmineTests.ts" />
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="Types.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

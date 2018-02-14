@@ -30,7 +30,7 @@
 				expect(undefinedValue).toBe("test5");
 			});
 		});
-	add page for running test, for example, SpecRunner.html
+	add page for running test, for example, index.html
 		<html>
 		<head>
 			<link rel="stylesheet" type="text/css"
