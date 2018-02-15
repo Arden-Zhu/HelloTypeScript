@@ -100,6 +100,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Functions.ts" />
     <TypeScriptCompile Include="SimpleJasmineTests.ts" />
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Types.ts" />
