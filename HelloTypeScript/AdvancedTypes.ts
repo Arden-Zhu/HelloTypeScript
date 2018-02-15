@@ -71,8 +71,17 @@
             y = null; // It is different with the book, it is expected to not compilable in the book
             expect(y).toBe(null);
         }
-
     });
+
+    it("Object rest & spread", () => {
+        let obj1 = { a: 1, b: 1 }
+        let obj2 = { a: 2, c: 3 }
+        let obj3 = { a: 0, ...obj1, ...obj2 }
+        expect(obj3.a).toBe(2);
+        expect(obj3.b).toBe(1);
+        expect(obj3.c).toBe(3);
+    });
+
 });
 
 
