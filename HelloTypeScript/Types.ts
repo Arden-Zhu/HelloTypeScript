@@ -53,6 +53,53 @@
         expect(1).toBe(1);
     });
 
+    it("Enums", () => {
+        enum DoorState {
+            Open,
+            Closed,
+            Ajax = 7
+        };
+
+        expect(DoorState.Open).toBe(0);
+        expect(DoorState["Open"]).toBe(0);
+        expect(DoorState[0]).toBe("Open");
+        expect(DoorState["0"]).toBe("Open");
+        expect(DoorState.Ajax).toBe(7);
+    })
+
+    it("Const Enums", () => {
+        const enum DoorState {
+            Open,
+            Closed,
+            Ajax = 7
+        };
+
+        expect(DoorState.Open).toBe(0);
+        expect(DoorState["Open"]).toBe(0);
+        //expect(DoorState[0]).toBe("Open"); // it don't pass compile
+        //expect(DoorState["0"]).toBe("Open"); // it don't pass compile
+        expect(DoorState.Ajax).toBe(7);
+    })
+
+    it("Const value", () => {
+        const constValue = "test";
+        //constValue = "2"; // it don't pass compile
+        expect(0).toBe(0);
+    })
+
+    it("let keyword", () => {
+        expect(a).toBe(undefined);
+        var a = 2;
+
+        // expect(b).toBe(undefined); // it don't pass compile
+        let b = 2;
+        {
+            // show block-scoped
+            let b = 20;
+            expect(b).toBe(20);
+        }
+        expect(b).toBe(2);
+    })
 
 });
 
