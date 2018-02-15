@@ -40,8 +40,12 @@ describe("Types.ts", function () {
     });
     it("any type", function () {
         var item1 = { id: 1, name: "name" };
-        item1 = { b: 2 };
-        expect(1).toBe(1);
+        item1 = { b: 2 }; // it passes ONLY because it is defined as any 
+        var concat = function (a, b, c) {
+            return a + b + c;
+        };
+        expect(concat(1, 2, 3)).toBe(6);
+        expect(concat("a", "b", "c")).toBe("abc");
     });
     it("Explicit casting", function () {
         var item1 = { id: 1, name: "item 1" };
