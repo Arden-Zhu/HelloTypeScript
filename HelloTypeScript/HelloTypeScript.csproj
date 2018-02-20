@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="AdvancedTypes.ts" />
+    <TypeScriptCompile Include="Classes.ts" />
     <TypeScriptCompile Include="Functions.ts" />
     <TypeScriptCompile Include="Interfaces.ts" />
     <TypeScriptCompile Include="SimpleJasmineTests.ts" />
