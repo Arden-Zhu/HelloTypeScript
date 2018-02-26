@@ -4,6 +4,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 describe("Decorators.ts", function () {
     it("Simple Decorator", function () {
         var indicator = 0;
@@ -101,7 +107,8 @@ describe("Decorators.ts", function () {
             function ClassWithPropertyDec() {
             }
             __decorate([
-                propertyDec
+                propertyDec,
+                __metadata("design:type", String)
             ], ClassWithPropertyDec.prototype, "name", void 0);
             return ClassWithPropertyDec;
         }());
@@ -124,10 +131,12 @@ describe("Decorators.ts", function () {
             function ClassWithPropertyDec() {
             }
             __decorate([
-                propertyDec
+                propertyDec,
+                __metadata("design:type", String)
             ], ClassWithPropertyDec.prototype, "name", void 0);
             __decorate([
-                propertyDec
+                propertyDec,
+                __metadata("design:type", String)
             ], ClassWithPropertyDec, "staticName", void 0);
             return ClassWithPropertyDec;
         }());
@@ -150,7 +159,10 @@ describe("Decorators.ts", function () {
                     + ("(" + output + ") called."));
             };
             __decorate([
-                methodDec
+                methodDec,
+                __metadata("design:type", Function),
+                __metadata("design:paramtypes", [String]),
+                __metadata("design:returntype", void 0)
             ], ClassWithMethodDec.prototype, "print", null);
             return ClassWithMethodDec;
         }());
@@ -186,7 +198,10 @@ describe("Decorators.ts", function () {
                     + ("(" + output + ") called."));
             };
             __decorate([
-                auditLogDec
+                auditLogDec,
+                __metadata("design:type", Function),
+                __metadata("design:paramtypes", [String]),
+                __metadata("design:returntype", void 0)
             ], ClassWithAuditDec.prototype, "print", null);
             return ClassWithAuditDec;
         }());
@@ -196,9 +211,58 @@ describe("Decorators.ts", function () {
         auditClass.print("test2");
         expect(indicator).toBe(2);
     });
-    it("", function () {
+    it("Parameter decorators", function () {
+        function parameterDec(target, methodName, parameterIndex) {
+            expect(typeof (target)).toBe("object");
+            expect(methodName).toBe("print");
+            expect(parameterIndex).toBe(0);
+        }
+        var ClassWithParamDec = /** @class */ (function () {
+            function ClassWithParamDec() {
+            }
+            ClassWithParamDec.prototype.print = function (value) {
+            };
+            __decorate([
+                __param(0, parameterDec),
+                __metadata("design:type", Function),
+                __metadata("design:paramtypes", [String]),
+                __metadata("design:returntype", void 0)
+            ], ClassWithParamDec.prototype, "print", null);
+            return ClassWithParamDec;
+        }());
     });
-    it("", function () {
+    /*
+        to use it emitDecoratorMetadata should be set to true in compilerOptions of tsconfig.json
+    */
+    it("Decorator metadata", function () {
+        function metadataParameterDec(target, methodName, parameterIndex) {
+        }
+        var ClassWithMetaData = /** @class */ (function () {
+            function ClassWithMetaData() {
+            }
+            ClassWithMetaData.prototype.print = function (id, name) {
+                return 1000;
+            };
+            __decorate([
+                __param(0, metadataParameterDec),
+                __metadata("design:type", Function),
+                __metadata("design:paramtypes", [Number, String]),
+                __metadata("design:returntype", Number)
+            ], ClassWithMetaData.prototype, "print", null);
+            return ClassWithMetaData;
+        }());
+        /*
+            these is seen in the Decorators.js
+
+                __decorate([
+                    __param(0, metadataParameterDec),
+                    __metadata("design:type", Function),
+                    __metadata("design:paramtypes", [Number, String]),
+                    __metadata("design:returntype", Number)
+                ], ClassWithMetaData.prototype, "print", null);
+
+        */
+        expect(1).toBe(1);
     });
     it("", function () {
     });

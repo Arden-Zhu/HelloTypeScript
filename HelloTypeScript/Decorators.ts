@@ -176,10 +176,53 @@
         expect(indicator).toBe(2);
     });
 
-    it("", () => {
+    it("Parameter decorators", () => {
+        function parameterDec(target: any,
+            methodName: string,
+            parameterIndex: number) {
+
+            expect(typeof (target)).toBe("object");
+            expect(methodName).toBe("print");
+            expect(parameterIndex).toBe(0);
+        }       
+
+        class ClassWithParamDec {
+            print( @parameterDec value: string) {
+
+            }
+        } 
     });
 
-    it("", () => {
+    /*
+        to use it emitDecoratorMetadata should be set to true in compilerOptions of tsconfig.json
+    */
+    it("Decorator metadata", () => {
+        function metadataParameterDec(target: any,
+            methodName: string,
+            parameterIndex: number) {
+
+        }
+
+        class ClassWithMetaData {
+            print(
+                @metadataParameterDec
+                id: number,
+                name: string): number {
+                return 1000;
+            }
+        }
+        /*
+            these is seen in the Decorators.js
+
+                __decorate([
+                    __param(0, metadataParameterDec),
+                    __metadata("design:type", Function),
+                    __metadata("design:paramtypes", [Number, String]),
+                    __metadata("design:returntype", Number)
+                ], ClassWithMetaData.prototype, "print", null);
+
+        */
+        expect(1).toBe(1);
     });
 
     it("", () => {
