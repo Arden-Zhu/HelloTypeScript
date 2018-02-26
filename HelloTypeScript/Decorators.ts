@@ -130,27 +130,34 @@
         } 
     });
 
-    // the test cannot pass
+
+    // fix the test
+    // according to https://medium.com/@prenezisbell_13570/correction-to-mastering-typescript-2nd-edition-method-decorators-c109d5620e41
     it("Using method decorators", () => {
         let indicator = 0;
-        class Indicator {
-            static indicator : number = 0;
-        }
 
         function auditLogDec(target: any,
             methodName: string,
             descriptor?: PropertyDescriptor) {
+            // 1. Check if descriptor is undefined.
+            if (descriptor === undefined) {
+                descriptor = Object.getOwnPropertyDescriptor(target, methodName);
+            }
             let originalFunction = target[methodName];
 
-            let auditFunction = function () {
-                console.log(`auditLogDec : overide of `
-                    + ` ${methodName} called `);
-                indicator++;
-                Indicator.indicator++;
-                originalFunction.apply(this, arguments);
-            }
+            // 2. Get a reference to the passed in descriptor.
+            let auditFunction = descriptor;
 
+            // 3. assign the new print function to the value of the descriptor, not to the descriptor itself. (solves the this problem)
+            auditFunction.value = function () {
+                console.log(`auditLogDec : override of ${methodName} called`);
+                indicator++;
+                originalFunction.apply(this, arguments);
+            };
+            // 4. As before set the key with the new function
             target[methodName] = auditFunction;
+            // 5. returning doesn't break anything, imitating what code from github did.
+            return auditFunction;
         }  
 
         class ClassWithAuditDec {
@@ -163,13 +170,10 @@
 
         let auditClass = new ClassWithAuditDec();
         auditClass.print("test");
-        //expect(indicator).toBe(1); // it does NOT work
-        //expect(Indicator.indicator).toBe(1);
-        //auditClass.print("test2");
-        //expect(indicator).toBe(2);
-        //expect(Indicator.indicator).toBe(2);
-        
-        expect(0).toBe(0);
+        expect(indicator).toBe(1); 
+
+        auditClass.print("test2");
+        expect(indicator).toBe(2);
     });
 
     it("", () => {
