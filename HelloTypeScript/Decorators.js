@@ -70,6 +70,121 @@ describe("Decorators.ts", function () {
         }());
         expect(indicator).toBe(10);
     });
+    it("Class decorator parameters", function () {
+        var decorator = function (constructor) {
+            // the constructor of the class is passed in
+            expect(constructor.toString()).toContain("function C()");
+            // use <any> to bypass property name checking
+            expect(constructor.name).toBe("C");
+            // inject a new property
+            constructor.prototype.testProperty = "test";
+        };
+        var C = /** @class */ (function () {
+            function C() {
+            }
+            C = __decorate([
+                decorator
+            ], C);
+            return C;
+        }());
+        var c = new C();
+        // the injected property is here
+        expect(c.testProperty).toBe("test");
+    });
+    it("Property decorators", function () {
+        function propertyDec(target, propertyKey) {
+            expect(typeof (target)).toBe("object");
+            expect(target.constructor.name).toBe("ClassWithPropertyDec");
+            expect(propertyKey).toBe("name");
+        }
+        var ClassWithPropertyDec = /** @class */ (function () {
+            function ClassWithPropertyDec() {
+            }
+            __decorate([
+                propertyDec
+            ], ClassWithPropertyDec.prototype, "name", void 0);
+            return ClassWithPropertyDec;
+        }());
+    });
+    it("Static property decorators", function () {
+        function propertyDec(target, propertyKey) {
+            if (typeof (target) === "object") {
+                expect(typeof (target)).toBe("object");
+                expect(target.constructor.name).toBe("ClassWithPropertyDec");
+                expect(propertyKey).toBe("name");
+            }
+            else {
+                // while it is static property ,  the target is a function, NOT a object
+                expect(typeof (target)).toBe("function");
+                expect(target.name).toBe("ClassWithPropertyDec");
+                expect(propertyKey).toBe("staticName");
+            }
+        }
+        var ClassWithPropertyDec = /** @class */ (function () {
+            function ClassWithPropertyDec() {
+            }
+            __decorate([
+                propertyDec
+            ], ClassWithPropertyDec.prototype, "name", void 0);
+            __decorate([
+                propertyDec
+            ], ClassWithPropertyDec, "staticName", void 0);
+            return ClassWithPropertyDec;
+        }());
+    });
+    it("Method decorators", function () {
+        function methodDec(target, methodName, descriptor) {
+            console.log("target: " + target);
+            console.log("methodName : " + methodName);
+            console.log("target[methodName] : " + target[methodName]);
+            expect(target.constructor.name).toBe("ClassWithMethodDec");
+            expect(methodName).toBe("print");
+            expect(typeof (target[methodName])).toBe("function");
+            expect(target[methodName].toString()).toContain("output");
+        }
+        var ClassWithMethodDec = /** @class */ (function () {
+            function ClassWithMethodDec() {
+            }
+            ClassWithMethodDec.prototype.print = function (output) {
+                console.log("ClassWithMethodDec.print"
+                    + ("(" + output + ") called."));
+            };
+            __decorate([
+                methodDec
+            ], ClassWithMethodDec.prototype, "print", null);
+            return ClassWithMethodDec;
+        }());
+    });
+    it("Using method decorators", function () {
+        var indicator = 0;
+        function auditLogDec(target, methodName, descriptor) {
+            var originalFunction = target[methodName];
+            var auditFunction = function () {
+                console.log("auditLogDec : overide of "
+                    + (" " + methodName + " called "));
+                indicator++;
+                originalFunction.apply(this, arguments);
+            };
+            target[methodName] = auditFunction;
+        }
+        var ClassWithAuditDec = /** @class */ (function () {
+            function ClassWithAuditDec() {
+            }
+            ClassWithAuditDec.prototype.print = function (output) {
+                console.log("ClassWithMethodDec.print"
+                    + ("(" + output + ") called."));
+            };
+            __decorate([
+                auditLogDec
+            ], ClassWithAuditDec.prototype, "print", null);
+            return ClassWithAuditDec;
+        }());
+        var auditClass = new ClassWithAuditDec();
+        auditClass.print("test");
+        expect(indicator).toBe(1);
+        auditClass.print("test2");
+        expect(indicator).toBe(2);
+    });
     it("", function () {
     });
     it("", function () {
