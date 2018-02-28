@@ -76,11 +76,5 @@ describe("Generics.ts", function () {
         var secondClass = creator2.create(SecondClass);
         expect(typeof (firstClass)).toBe("object");
     });
-    it("", function () {
-    });
-    it("", function () {
-    });
-    it("", function () {
-    });
 });
 //# sourceMappingURL=Generics.js.map

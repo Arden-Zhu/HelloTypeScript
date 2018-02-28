@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="AdvancedTypes.ts" />
+    <TypeScriptCompile Include="Asynchronous.ts" />
     <TypeScriptCompile Include="Classes.ts" />
     <TypeScriptCompile Include="Decorators.ts" />
     <TypeScriptCompile Include="Functions.ts" />

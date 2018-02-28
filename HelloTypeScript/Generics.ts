@@ -82,14 +82,5 @@
         expect(typeof (firstClass)).toBe("object");
     });
 
-    it("", () => {
-    });
-
-    it("", () => {
-    });
-
-    it("", () => {
-    });
-
 });
 
