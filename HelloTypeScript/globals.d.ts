@@ -1,0 +1,1 @@
+﻿declare var CONTACT_EMAIL_ARRAY: string[]; 

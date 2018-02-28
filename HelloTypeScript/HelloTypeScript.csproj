@@ -106,6 +106,8 @@
     <TypeScriptCompile Include="Decorators.ts" />
     <TypeScriptCompile Include="Functions.ts" />
     <TypeScriptCompile Include="Generics.ts" />
+    <TypeScriptCompile Include="globals.d.ts" />
+    <TypeScriptCompile Include="GlobalVariables.ts" />
     <TypeScriptCompile Include="Inheritance.ts" />
     <TypeScriptCompile Include="Interfaces.ts" />
     <TypeScriptCompile Include="SimpleJasmineTests.ts" />
