@@ -95,3 +95,41 @@ describe("Asynchronous.ts_2", () => {
     });
 
 });
+
+// to show the usage of await async
+describe("Asynchronous.ts_3", () => {
+    let message = "";
+    let message2 = "";
+
+
+    function promiseWithReturned(b: boolean): Promise<string> {
+        return new Promise<string>
+            ((resolve: (string) => void, reject: (string) => void) => {
+                if (b)
+                    resolve("success");
+                else
+                    reject("fail");
+            })
+    }
+
+    beforeEach(async (done) => {
+        message = message2 = "";
+        let step = 1;
+
+        message = await promiseWithReturned(true);
+        try {
+            await promiseWithReturned(false);
+        }
+        catch (error) {
+            message2 = error;
+        }
+        done();
+    });
+
+    it("Promise with returned value", (done) => {
+        expect(message).toBe("success");
+        expect(message2).toBe("fail");
+        done();
+    });
+
+});
