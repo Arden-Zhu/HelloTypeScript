@@ -146,5 +146,14 @@ describe("Types.ts", function () {
         var m = toMap(va, 'id');
         expect(m['2'].value).toBe('v2');
     });
+    //it("Dictinary<T>", () => {
+    //    interface Desc {
+    //        id: number,
+    //        value: string,
+    //    }
+    //    interface Dictionary<T, K> {
+    //        [key: K]: T  // compile fail
+    //    }
+    //})
 });
 //# sourceMappingURL=Types.js.map
