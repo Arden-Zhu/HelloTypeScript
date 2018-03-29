@@ -166,6 +166,26 @@
         expect(r2.length).toBe(5);
         expect(r2[4]).toBe(copyMethods['newProp'].desc);
 
+        let toMap = function <T>(a: T[], key: string): Map<T> {
+            let r: Map<T> = {}
+            for (var t of a)
+                r[t[key]] = t;
+            return r;
+        }
+
+        interface V {
+            id: string,
+            value : string,
+        };
+
+        let va: V[] = [
+            { id: '1', value: 'v1' },
+            { id: '2', value: 'v2' },
+        ];
+
+        let m = toMap(va, 'id');
+        expect(m['2'].value).toBe('v2');
+
     })
 });
 

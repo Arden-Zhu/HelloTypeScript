@@ -130,6 +130,21 @@ describe("Types.ts", function () {
         var r2 = map(copyMethods, function (value) { return value.desc; });
         expect(r2.length).toBe(5);
         expect(r2[4]).toBe(copyMethods['newProp'].desc);
+        var toMap = function (a, key) {
+            var r = {};
+            for (var _i = 0, a_2 = a; _i < a_2.length; _i++) {
+                var t = a_2[_i];
+                r[t[key]] = t;
+            }
+            return r;
+        };
+        ;
+        var va = [
+            { id: '1', value: 'v1' },
+            { id: '2', value: 'v2' },
+        ];
+        var m = toMap(va, 'id');
+        expect(m['2'].value).toBe('v2');
     });
 });
 //# sourceMappingURL=Types.js.map
