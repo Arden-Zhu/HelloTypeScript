@@ -137,11 +137,11 @@
         interface Desc {
             desc: string;
         }
-        interface Map {
-            [key: string]: Desc
+        interface Map<T> {
+            [key: string]: T
         }
 
-        let copyMethods: Map = {
+        let copyMethods: Map<Desc> = {
             petite: { desc: 'Copy Missy to Petite' },
             woman: { desc: 'Copy Missy to Plus' },
             china: { desc: 'Copy Missy to China Market' },
@@ -157,6 +157,14 @@
         r = Object.keys(copyMethods).map(value => copyMethods[value].desc);
         expect(r.length).toBe(5);
         expect(r[4]).toBe(copyMethods['newProp'].desc);
+
+        let map = function <T, R>(m: Map<T>, cb: (value: T, index?: number, m?: Map<T>) => R) : R[] {
+            return Object.keys(m).map((key, i) => cb(m[key], i, m));
+        }
+
+        let r2 = map(copyMethods, value => value.desc);
+        expect(r2.length).toBe(5);
+        expect(r2[4]).toBe(copyMethods['newProp'].desc);
 
     })
 });

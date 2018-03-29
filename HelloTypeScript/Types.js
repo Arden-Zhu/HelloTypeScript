@@ -124,6 +124,12 @@ describe("Types.ts", function () {
         r = Object.keys(copyMethods).map(function (value) { return copyMethods[value].desc; });
         expect(r.length).toBe(5);
         expect(r[4]).toBe(copyMethods['newProp'].desc);
+        var map = function (m, cb) {
+            return Object.keys(m).map(function (key, i) { return cb(m[key], i, m); });
+        };
+        var r2 = map(copyMethods, function (value) { return value.desc; });
+        expect(r2.length).toBe(5);
+        expect(r2[4]).toBe(copyMethods['newProp'].desc);
     });
 });
 //# sourceMappingURL=Types.js.map
