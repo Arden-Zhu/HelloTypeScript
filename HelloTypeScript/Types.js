@@ -91,5 +91,23 @@ describe("Types.ts", function () {
         }
         expect(b).toBe(2);
     });
+    it("Object key", function () {
+        var copyMethods = {
+            petite: { desc: 'Copy Missy to Petite' },
+            woman: { desc: 'Copy Missy to Plus' },
+            china: { desc: 'Copy Missy to China Market' },
+            ongoing: { desc: 'Copy onging style' }
+        };
+        var r = Object.keys(copyMethods).map(function (value) { return copyMethods[value]; });
+        expect(r.length).toBe(4);
+    });
+    it("Map", function () {
+        var m = new Map();
+        m.set('a', '1');
+        m.set('b', '2');
+        expect(m.size).toBe(2);
+        expect(m.get('a')).toBe("1");
+        //let r = m.forEach((value, key, map) => value);
+    });
 });
 //# sourceMappingURL=Types.js.map

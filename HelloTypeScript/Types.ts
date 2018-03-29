@@ -106,6 +106,32 @@
         expect(b).toBe(2);
     })
 
+    it("Object key", () => {
+        interface ICopyMethod {
+            value: string
+            desc: string;
+        }
+
+        let copyMethods = {
+            petite: { desc: 'Copy Missy to Petite'},
+            woman: { desc: 'Copy Missy to Plus' },
+            china: { desc: 'Copy Missy to China Market' },
+            ongoing: { desc: 'Copy onging style' }
+        }
+
+        let r = Object.keys(copyMethods).map(value => copyMethods[value]);
+        expect(r.length).toBe(4);
+    })
+
+    it("Map", () => {
+        let m = new Map<string, string>();
+        m.set('a', '1');
+        m.set('b', '2');
+        expect(m.size).toBe(2);
+        expect(m.get('a')).toBe("1");
+        //let r = m.forEach((value, key, map) => value);
+
+    })
 });
 
 
