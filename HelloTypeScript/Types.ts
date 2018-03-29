@@ -132,6 +132,33 @@
         //let r = m.forEach((value, key, map) => value);
 
     })
+
+    it("Map<T>", () => {
+        interface Desc {
+            desc: string;
+        }
+        interface Map {
+            [key: string]: Desc
+        }
+
+        let copyMethods: Map = {
+            petite: { desc: 'Copy Missy to Petite' },
+            woman: { desc: 'Copy Missy to Plus' },
+            china: { desc: 'Copy Missy to China Market' },
+            ongoing: { desc: 'Copy onging style' }
+        }
+
+        let r = Object.keys(copyMethods).map(value => copyMethods[value].desc);
+        expect(r.length).toBe(4);
+        expect(r[1]).toBe(copyMethods['woman'].desc);
+        expect(r[1]).toBe(copyMethods.woman.desc);
+
+        copyMethods.newProp = { desc: "new prop" };
+        r = Object.keys(copyMethods).map(value => copyMethods[value].desc);
+        expect(r.length).toBe(5);
+        expect(r[4]).toBe(copyMethods['newProp'].desc);
+
+    })
 });
 
 
