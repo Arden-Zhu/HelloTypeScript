@@ -197,7 +197,11 @@
     //        [key: K]: T  // compile fail
     //    }
     //})
+    it("Map?", () => {
+        let m = new Map<string, string>();
+        
 
+    });
 });
 
 

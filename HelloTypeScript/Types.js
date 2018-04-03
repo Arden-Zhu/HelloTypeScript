@@ -155,5 +155,8 @@ describe("Types.ts", function () {
     //        [key: K]: T  // compile fail
     //    }
     //})
+    it("Map?", function () {
+        var m = new Map();
+    });
 });
 //# sourceMappingURL=Types.js.map
