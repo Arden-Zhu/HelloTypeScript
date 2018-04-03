@@ -1,13 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 describe("Map.ts", function () {
     function toStr(m) {
         var s = '';
@@ -30,12 +20,72 @@ describe("Map.ts", function () {
         d.set(2, '6');
         expect(toStr(d)).toBe('153326');
     });
-    var Dict = /** @class */ (function (_super) {
-        __extends(Dict, _super);
+    var Dict = /** @class */ (function () {
         function Dict() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            this._map = new Map();
         }
+        Dict.fromArray = function (arr) {
+            var r = new Dict();
+            for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
+                var a = arr_1[_i];
+                r._map.set(a.id, a);
+            }
+            return r;
+        };
+        Dict.prototype.map = function (cb) {
+            var _this = this;
+            var idx = 0;
+            var r = [];
+            this._map.forEach(function (value, id) {
+                r.push(cb(value, id, idx++, _this));
+            });
+            return r;
+        };
+        Dict.prototype.get = function (id) {
+            return this._map[id];
+        };
+        Dict.prototype.has = function (id) {
+            return this._map[id];
+        };
+        Dict.prototype.keys = function () {
+            return this.map(function (value, id) { return id; });
+        };
+        Dict.prototype.size = function () {
+            return this._map.size;
+        };
+        Dict.prototype.clone = function () {
+            var r = new Dict();
+            this._map.forEach(function (value, key) {
+                r._map.set(key, value);
+            });
+            return r;
+        };
+        Dict.prototype.update = function (value) {
+            var r = this.clone();
+            r._map.set(value.id, value);
+            return r;
+        };
+        Dict.prototype.remove = function (id) {
+            var r = this.clone();
+            r._map.delete(id);
+            return r;
+        };
+        Dict.prototype.updateBatch = function (values) {
+            var r = new Dict();
+            this._map.forEach(function (oldValue, key) {
+                r._map.set(key, values.has(key) ? values[key] : oldValue);
+            });
+            return r;
+        };
+        Dict.prototype.where = function (predict) {
+            var r = new Dict();
+            this._map.forEach(function (value, key) {
+                if (predict(value))
+                    r._map.set(key, value);
+            });
+            return r;
+        };
         return Dict;
-    }(Map));
+    }());
 });
 //# sourceMappingURL=Map.js.map
