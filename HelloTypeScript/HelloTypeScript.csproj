@@ -114,6 +114,7 @@
     <TypeScriptCompile Include="GlobalVariables.ts" />
     <TypeScriptCompile Include="Inheritance.ts" />
     <TypeScriptCompile Include="Interfaces.ts" />
+    <TypeScriptCompile Include="Map.ts" />
     <TypeScriptCompile Include="SomeTests.ts" />
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="Types.ts" />
